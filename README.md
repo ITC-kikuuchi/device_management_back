@@ -1,0 +1,2 @@
+# device_management_back
+機器管理システム バックエンド開発用リポジトリ
