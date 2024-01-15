@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
-app = FastAPI()
+from routers import auth, pc
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+app = FastAPI()
+app.include_router(auth.router)
+app.include_router(pc.router)
