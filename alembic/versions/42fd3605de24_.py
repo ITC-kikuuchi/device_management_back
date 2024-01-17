@@ -50,7 +50,7 @@ def upgrade() -> None:
     sa.Column('delivery_date', sa.Date(), nullable=True),
     sa.Column('disposal_date', sa.Date(), nullable=True),
     sa.Column('remarks', sa.Text(), nullable=True),
-    sa.Column('delete_flag', sa.Boolean(), nullable=True),
+    sa.Column('delete_flag', sa.Boolean(), nullable=False, default=0),
     sa.Column('create_id', sa.Integer(), nullable=True),
     sa.Column('update_id', sa.Integer(), nullable=True),
     sa.Column('created_at', mysql.TIMESTAMP(), nullable=True),
