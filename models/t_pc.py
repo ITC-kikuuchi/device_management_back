@@ -26,7 +26,7 @@ class T_pc(Base):
     delivery_date = Column(Date)
     disposal_date = Column(Date)
     remarks = Column(Text)
-    delete_flag = Column(Boolean, default=0)
+    delete_flag = Column(Boolean, default=0, nullable=False)
     create_id = Column(Integer)
     update_id = Column(Integer)
     created_at = Column(Timestamp)
