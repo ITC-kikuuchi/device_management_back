@@ -28,20 +28,20 @@ def getPc(db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/pc")
-async def createPc():
+def createPc():
     pass
 
 
 @router.get("/pc/{pc_id}")
-async def getPcDetail():
+def getPcDetail():
     pass
 
 
 @router.put("/pc/{pc_id}")
-async def updatePc():
+def updatePc():
     pass
 
 
 @router.delete("/pc/{pc_id}")
-async def deletePc():
+def deletePc():
     pass
