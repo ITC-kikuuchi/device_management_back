@@ -9,7 +9,7 @@ import models.t_pc as pc_model
 
 router = APIRouter()
 
-
+# PC一覧取得API
 @router.get("/pc")
 def getPc(db: Session = Depends(get_db)):
     try:
@@ -29,6 +29,7 @@ def getPc(db: Session = Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+# PC登録API
 @router.post("/pc")
 def createPc(pc: pc_schema.createPc, db: Session = Depends(get_db)):
     try:
@@ -40,10 +41,14 @@ def createPc(pc: pc_schema.createPc, db: Session = Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@router.get("/pc/{pc_id}")
-def getPcDetail():
-    pass
-
+# PC詳細取得API
+@router.get("/pc/{pc_id}", response_model=pc_schema.detailPc)
+def getPcDetail(pc_id: int, db: Session = Depends(get_db)):
+    pc = pc_crud.get_detail_pc(db, pc_id=pc_id)
+    if not pc:
+        # id に紐づくデータが存在しなかった場合
+        raise HTTPException(status_code=404, detail=f"PC_ID: {pc_id} not found")
+    return pc
 
 @router.put("/pc/{pc_id}")
 def updatePc():
