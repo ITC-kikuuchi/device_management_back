@@ -1,9 +1,11 @@
 from fastapi import APIRouter, Depends,  HTTPException, status
 from fastapi.responses import JSONResponse
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from database import get_db
 
 import cruds.t_pc as pc_crud
+import schemas.t_pc as pc_schema
+import models.t_pc as pc_model
 
 router = APIRouter()
 
@@ -28,9 +30,15 @@ def getPc(db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/pc")
-def createPc():
-    pass
-
+def createPc(pc: pc_schema.createPc, db: Session = Depends(get_db)):
+    try:
+        db_pc = pc_model.T_pc(**pc.dict())
+        db.add(db_pc)
+        db.commit()
+        db.refresh(db_pc)
+        return HTTPException(status_code=200)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/pc/{pc_id}")
 def getPcDetail():
