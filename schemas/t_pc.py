@@ -8,6 +8,18 @@ BaseModel は FastApi のスキーマモデルであることを示す。
 Pc クラスは BaseModel を継承しているクラス
 """
 
+class pc(BaseModel):
+    id: int
+    label_name: Optional[str] = None
+    pc_name: Optional[str] = None
+    pc_user: Optional[str] = None
+    manufacturer: Optional[str] = None
+    type: Optional[str] = None
+    delete_flag: bool
+
+    class Config:
+        orm_mode = True
+
 class createPc(BaseModel):
     label_name: Optional[str] = None
     pc_name: Optional[str] = None
@@ -47,17 +59,6 @@ class detailPc(BaseModel):
     delivery_date: Optional[date] = None
     disposal_date: Optional[date] = None
     remarks: Optional[str] = None
-
-    class Config:
-        orm_mode = True
-
-class pc(BaseModel):
-    id: int
-    label_name: Optional[str] = None
-    pc_name: Optional[str] = None
-    pc_user: Optional[str] = None
-    manufacturer: Optional[str] = None
-    type: Optional[str] = None
 
     class Config:
         orm_mode = True
