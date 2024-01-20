@@ -10,22 +10,10 @@ import models.t_pc as pc_model
 router = APIRouter()
 
 # PC一覧取得API
-@router.get("/pc")
+@router.get("/pc", response_model=list[pc_schema.pc])
 def getPc(db: Session = Depends(get_db)):
     try:
-        pc_list = pc_crud.get_pc(db)
-        results = [
-            {
-                "id": pc.id,
-                "label_name": pc.label_name,
-                "pc_name": pc.pc_name,
-                "pc_user": pc.pc_user,
-                "manufacturer": pc.manufacturer,
-                "type": pc.type,
-            }
-            for pc in pc_list
-        ]
-        return JSONResponse(content=results)
+        return pc_crud.getPc(db)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
