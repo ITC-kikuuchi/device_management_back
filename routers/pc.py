@@ -9,7 +9,7 @@ import models.t_pc as pc_model
 
 router = APIRouter()
 
-
+# PC一覧取得API
 @router.get("/pc")
 def getPc(db: Session = Depends(get_db)):
     try:
@@ -29,6 +29,7 @@ def getPc(db: Session = Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+# PC登録API
 @router.post("/pc")
 def createPc(pc: pc_schema.createPc, db: Session = Depends(get_db)):
     try:
