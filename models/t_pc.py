@@ -5,7 +5,6 @@ from sqlalchemy.orm import relationship
 
 from database import Base
 
-
 class T_pc(Base):
     __tablename__ = "t_pc"
 
