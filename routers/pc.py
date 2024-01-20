@@ -33,10 +33,7 @@ def getPc(db: Session = Depends(get_db)):
 @router.post("/pc")
 def createPc(pc: pc_schema.createPc, db: Session = Depends(get_db)):
     try:
-        db_pc = pc_model.T_pc(**pc.dict())
-        db.add(db_pc)
-        db.commit()
-        db.refresh(db_pc)
+        pc_crud.createPc(db, pc)
         return HTTPException(status_code=200)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
