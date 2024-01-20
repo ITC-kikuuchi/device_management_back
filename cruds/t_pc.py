@@ -1,7 +1,7 @@
-from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 import models.t_pc as pc_model
+import schemas.t_pc as pc_schema
 
 # PC一覧取得
 def getPc(db: Session):

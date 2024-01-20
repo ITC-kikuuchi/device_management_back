@@ -1,11 +1,9 @@
-from fastapi import APIRouter, Depends,  HTTPException, status
-from fastapi.responses import JSONResponse
-from sqlalchemy.orm import Session, joinedload
+from fastapi import APIRouter, Depends,  HTTPException
+from sqlalchemy.orm import Session
 from database import get_db
 
 import cruds.t_pc as pc_crud
 import schemas.t_pc as pc_schema
-import models.t_pc as pc_model
 
 router = APIRouter()
 
