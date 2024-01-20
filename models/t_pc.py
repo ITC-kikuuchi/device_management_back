@@ -1,10 +1,8 @@
 from sqlalchemy import Column
 from sqlalchemy import Integer, String, Text, Date, Boolean
 from sqlalchemy.dialects.mysql import TIMESTAMP as Timestamp
-from sqlalchemy.orm import relationship
 
 from database import Base
-
 
 class T_pc(Base):
     __tablename__ = "t_pc"
