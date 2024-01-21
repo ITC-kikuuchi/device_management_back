@@ -33,6 +33,7 @@ def getPcDetail(pc_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail=f"PC_ID: {pc_id} not found")
     return pc
 
+# PC更新API
 @router.put("/pc/{pc_id}")
 def updatePc(pc_id: int, pc: pc_schema.updatePc, db: Session = Depends(get_db)):
     pcById = pc_crud.getDetailPc(db, pc_id=pc_id)
