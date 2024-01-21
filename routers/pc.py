@@ -34,9 +34,16 @@ def getPcDetail(pc_id: int, db: Session = Depends(get_db)):
     return pc
 
 @router.put("/pc/{pc_id}")
-def updatePc():
-    pass
-
+def updatePc(pc_id: int, pc: pc_schema.updatePc, db: Session = Depends(get_db)):
+    pcById = pc_crud.getDetailPc(db, pc_id=pc_id)
+    if not pcById:
+        # id に紐づくデータが存在しなかった場合
+        raise HTTPException(status_code=404, detail=f"PC_ID: {pc_id} not found")
+    try:
+        pc_crud.updatePc(db, pc, original=pcById)
+        return HTTPException(status_code=200)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @router.delete("/pc/{pc_id}")
 def deletePc():
