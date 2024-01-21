@@ -37,3 +37,8 @@ def updatePc(db: Session, pc: pc_schema.updatePc, original: pc_model.T_pc):
     original.disposal_date = pc.disposal_date
     original.remarks = pc.remarks
     db.commit()
+
+# PC削除
+def deletePc(db: Session, original: pc_model.T_pc) -> None:
+    db.delete(original)
+    db.commit()
