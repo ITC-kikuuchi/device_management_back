@@ -11,8 +11,6 @@ router = APIRouter()
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Session = Depends(get_db)):
-    user = auth_crud.getUserByName(db, user_name=token)
 # パスワード認証を行い、トークンを生成
 def create_tokens(user_id: int):
     # ペイロード作成
