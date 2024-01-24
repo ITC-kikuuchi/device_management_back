@@ -3,6 +3,9 @@ from typing import Annotated
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from database import get_db
+from datetime import datetime, timedelta
+from jose import jwt
+
 
 import cruds.auth as auth_crud
 import models.m_user as M_user
@@ -21,13 +24,22 @@ def create_tokens(user_id: int):
     }
     access_token = jwt.encode(access_payload, 'SECRET_KEY123', algorithm='HS256')
     return {'access_token': access_token, 'token_type': 'bearer'}
+
+# トークンからユーザーを取得
+def get_current_user_from_token(token: str, db: Session):
+    # トークンをデコードしてペイロードを取得。
+    payload = jwt.decode(token, 'SECRET_KEY123', algorithms=['HS256'])
+
+    # トークンに紐づくユーザ情報の取得
+    user = auth_crud.getUserById(db, payload['user_id'])
     if not user:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid authentication credentials",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
+        # トークンに紐づくユーザ情報が存在しない場合に Not authenticated を返却
+        raise HTTPException(status_code=401, detail=f'Not authenticated')
     return user
+
+# トークンからログイン中のユーザーを取得
+def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    return get_current_user_from_token(token, db)
 
 # ログインAPI
 @router.post("/login")
