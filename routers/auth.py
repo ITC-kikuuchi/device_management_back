@@ -13,6 +13,16 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Session = Depends(get_db)):
     user = auth_crud.getUserByName(db, user_name=token)
+# パスワード認証を行い、トークンを生成
+def create_tokens(user_id: int):
+    # ペイロード作成
+    access_payload = {
+        'token_type': 'access_token',
+        'exp': datetime.utcnow() + timedelta(minutes=60),
+        'user_id': user_id,
+    }
+    access_token = jwt.encode(access_payload, 'SECRET_KEY123', algorithm='HS256')
+    return {'access_token': access_token, 'token_type': 'bearer'}
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -24,10 +34,10 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Se
 # ログインAPI
 @router.post("/login")
 async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
-    user = auth_crud.getUser(db, user=form_data.username, password=form_data.password)
+    user = auth_crud.getUser(db, mail=form_data.username, password=form_data.password)
     if not user:
         raise HTTPException(status_code=401, detail=f'メールアドレスまたはパスワードが違います。')
-    return {"access_token": user.user_name, "token_type": "bearer"}
+    return create_tokens(user.id)
 
 # 　ログイン情報取得API
 @router.get("/me")
