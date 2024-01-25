@@ -4,7 +4,7 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from database import get_db
 from datetime import datetime, timedelta
-from jose import jwt
+from jose import JWTError, jwt
 
 
 import cruds.auth as auth_crud
