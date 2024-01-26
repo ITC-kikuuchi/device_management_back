@@ -8,6 +8,7 @@ from jose import JWTError, jwt
 
 
 import cruds.auth as auth_crud
+import schemas.auth as auth_schema
 import models.m_user as M_user
 
 router = APIRouter()
@@ -55,7 +56,7 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = 
     return create_tokens(user.id)
 
 # 　ログインユーザ取得API
-@router.get("/me")
+@router.get("/me", response_model=auth_schema.loginUser)
 async def me(login_user: M_user = Depends(get_current_user)):
     return login_user
 
