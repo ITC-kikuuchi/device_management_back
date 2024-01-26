@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends,  HTTPException, status
+from fastapi import APIRouter, Depends,  HTTPException, status, Request
 from typing import Annotated
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
@@ -26,7 +26,7 @@ def create_tokens(user_id: int):
     return {'access_token': access_token, 'token_type': 'bearer'}
 
 # トークンを検証してユーザーを取得する関数
-def get_current_user(token: str = Depends(oauth2_scheme),  db: Session = Depends(get_db)):
+def get_current_user(request: Request, token: str = Depends(oauth2_scheme),  db: Session = Depends(get_db)):
     # エラーメッセージの作成
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -41,7 +41,9 @@ def get_current_user(token: str = Depends(oauth2_scheme),  db: Session = Depends
         if not user:
             # トークンに紐づくユーザ情報が取得できなかった場合
             raise credentials_exception
-        return user
+        if "/me" in request.url.path:
+            # ログインユーザ取得API の場合
+            return user
     except JWTError:
         # jwt でエラーが発生した場合
         raise credentials_exception
