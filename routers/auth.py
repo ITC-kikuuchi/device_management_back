@@ -22,7 +22,7 @@ def create_tokens(user_id: int):
         'exp': datetime.utcnow() + timedelta(minutes=60),
         'user_id': user_id,
     }
-    access_token = jwt.encode(access_payload, 'SECRET_KEY123', algorithm='HS256')
+    access_token = jwt.encode(access_payload, os.environ["SECRET_KEY"], algorithm='HS256')
     return {'access_token': access_token, 'token_type': 'bearer'}
 
 # トークンを検証してユーザーを取得する関数
@@ -35,7 +35,7 @@ def get_current_user(token: str = Depends(oauth2_scheme),  db: Session = Depends
     )
     try:
         # トークンをデコードしてペイロードを取得
-        payload = jwt.decode(token, 'SECRET_KEY123', algorithms=['HS256'])
+        payload = jwt.decode(token, os.environ["SECRET_KEY"], algorithms=['HS256'])
         # トークンに紐づくユーザ情報の取得
         user = auth_crud.getUserById(db, payload['user_id'])
         if not user:
