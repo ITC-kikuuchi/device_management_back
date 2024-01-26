@@ -6,11 +6,10 @@ from database import get_db
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
 
+import os
 
 import cruds.auth as auth_crud
 import schemas.auth as auth_schema
-import models.m_user as M_user
-
 router = APIRouter()
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
