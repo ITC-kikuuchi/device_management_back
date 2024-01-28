@@ -15,3 +15,12 @@ def getIos(login_user: dict = Depends(get_current_user), db: Session = Depends(g
         return ios_crud.getIos(db)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+# iOS登録API
+@router.post("/ios")
+def createIos(ios: ios_schema.createIos, login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
+    try:
+        ios_crud.createIos(db, ios)
+        return HTTPException(status_code=200)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
