@@ -13,3 +13,7 @@ def createIos(db:Session, ios: ios_schema.createIos):
     db.add(db_ios)
     db.commit()
     db.refresh(db_ios)
+
+# iOS詳細取得
+def getDetailIos(db:Session, ios_id:int):
+    return db.query(ios_model.T_ios).filter(ios_model.T_ios.id == ios_id).first()
