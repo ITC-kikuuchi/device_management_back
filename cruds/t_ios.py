@@ -23,3 +23,8 @@ def updateIos(db: Session, ios: ios_schema.updateIos, original: ios_model.T_ios)
     for field, value in ios.dict().items():
         setattr(original, field, value)
     db.commit()
+
+# PC削除
+def deleteIos(db: Session, original: ios_model.T_ios):
+    db.delete(original)
+    db.commit()
