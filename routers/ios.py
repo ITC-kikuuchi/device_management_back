@@ -36,7 +36,7 @@ def createIos(ios_id: int, login_user: dict = Depends(get_current_user), db: Ses
 
 # iOS更新API
 @router.put("/ios/{ios_id}")
-def updatePc(ios_id: int, ios: ios_schema.updateIos, login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
+def updateIos(ios_id: int, ios: ios_schema.updateIos, login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
     iosById = ios_crud.getDetailIos(db, ios_id=ios_id)
     if not iosById:
         # id に紐づくデータが存在しなかった場合
