@@ -33,3 +33,16 @@ def createIos(ios_id: int, login_user: dict = Depends(get_current_user), db: Ses
         # id に紐づくデータが存在しなかった場合
         raise HTTPException(status_code=404, detail=f"IOS_ID: {ios_id} not found")
     return ios
+
+# iOS更新API
+@router.put("/ios/{ios_id}")
+def updatePc(ios_id: int, ios: ios_schema.updateIos, login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
+    iosById = ios_crud.getDetailIos(db, ios_id=ios_id)
+    if not iosById:
+        # id に紐づくデータが存在しなかった場合
+        raise HTTPException(status_code=404, detail=f"IOS_ID: {ios_id} not found")
+    try:
+        ios_crud.updateIos(db, ios, original=iosById)
+        return HTTPException(status_code=200)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
