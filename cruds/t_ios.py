@@ -18,8 +18,13 @@ def createIos(db:Session, ios: ios_schema.createIos):
 def getDetailIos(db:Session, ios_id:int):
     return db.query(ios_model.T_ios).filter(ios_model.T_ios.id == ios_id).first()
 
-# ios更新
+# iOS更新
 def updateIos(db: Session, ios: ios_schema.updateIos, original: ios_model.T_ios):
     for field, value in ios.dict().items():
         setattr(original, field, value)
+    db.commit()
+
+# PC削除
+def deleteIos(db: Session, original: ios_model.T_ios):
+    db.delete(original)
     db.commit()
