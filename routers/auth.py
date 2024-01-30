@@ -41,9 +41,8 @@ def get_current_user(request: Request, token: str = Depends(oauth2_scheme),  db:
         if not user:
             # トークンに紐づくユーザ情報が取得できなかった場合
             raise credentials_exception
-        if "/me" in request.url.path:
-            # ログインユーザ取得API の場合
-            return user
+        # ログインユーザ取得API の場合
+        return user
     except JWTError:
         # jwt でエラーが発生した場合
         raise credentials_exception

@@ -8,8 +8,8 @@ def getPc(db: Session):
     return db.query(pc_model.T_pc).all()
 
 # PC登録
-def createPc(db: Session, pc: pc_schema.createPc):
-    db_pc = pc_model.T_pc(**pc.dict())
+def createPc(db: Session, pc: pc_schema.createPc, current_user):
+    db_pc = pc_model.T_pc(**pc.dict(), create_id=current_user.id, update_id=current_user.id)
     db.add(db_pc)
     db.commit()
     db.refresh(db_pc)
@@ -19,26 +19,23 @@ def getDetailPc(db: Session, pc_id: int):
     return db.query(pc_model.T_pc).filter(pc_model.T_pc.id == pc_id).first()
 
 # PC更新
-def updatePc(db: Session, pc: pc_schema.updatePc, original: pc_model.T_pc):
-    original.label_name = pc.label_name
-    original.pc_name = pc.pc_name
-    original.user_name = pc.user_name
-    original.pc_user = pc.pc_user
-    original.condition = pc.condition
-    original.manufacturer = pc.manufacturer
-    original.type = pc.type
-    original.service_tag = pc.service_tag
-    original.os = pc.os
-    original.bit = pc.bit
-    original.ie_version = pc.ie_version
-    original.ip_address = pc.ip_address
-    original.gx_wwp_license = pc.gx_wwp_license
-    original.delivery_date = pc.delivery_date
-    original.disposal_date = pc.disposal_date
-    original.remarks = pc.remarks
+def updatePc(db: Session, pc: pc_schema.updatePc, current_user, original: pc_model.T_pc):
+    for field, value in pc.dict().items():
+        setattr(original, field, value)
+
+    original.update_id = current_user.id
     db.commit()
 
 # PC削除
 def deletePc(db: Session, original: pc_model.T_pc) -> None:
     db.delete(original)
+    db.commit()
+
+# 最終更新フラグが true の情報を取得
+def getLastUpdatedData(db: Session):
+    return db.query(pc_model.T_pc).filter(pc_model.T_pc.last_updated_flag == True).first()
+
+# 最終更新フラグを false に更新
+def updateLastUpdateFlag(db: Session, pc_data):
+    pc_data.last_updated_flag = False
     db.commit()

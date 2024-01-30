@@ -1,12 +1,15 @@
-from datetime import date
+from datetime import date, datetime, timezone, timedelta
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 """
 BaseModel は FastApi のスキーマモデルであることを示す。
 Pc クラスは BaseModel を継承しているクラス
 """
+
+# 日本時間のタイムゾーンの設定
+jst = timezone(timedelta(hours=9))
 
 class pc(BaseModel):
     id: int
@@ -37,6 +40,9 @@ class createPc(BaseModel):
     delivery_date: Optional[date] = None
     disposal_date: Optional[date] = None
     remarks: Optional[str] = None
+    last_updated_flag: bool = Field(default=True)
+    created_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(jst))
+    updated_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(jst))
 
     class Config:
         orm_mode = True
@@ -80,6 +86,8 @@ class updatePc(BaseModel):
     delivery_date: Optional[date] = None
     disposal_date: Optional[date] = None
     remarks: Optional[str] = None
+    last_updated_flag: bool = Field(default=True)
+    updated_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(jst))
 
     class Config:
         orm_mode = True
