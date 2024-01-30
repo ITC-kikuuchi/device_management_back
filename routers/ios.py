@@ -29,9 +29,10 @@ def getIos(login_user: dict = Depends(get_current_user), db: Session = Depends(g
 @router.post("/ios")
 def createIos(ios: ios_schema.createIos, login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
     try:
-        ios_crud.createIos(db, ios)
         # 最終更新フラグを false に変更
         updateLastUpdateFlag(db)
+        # iOS情報の登録
+        ios_crud.createIos(db, ios, login_user)
         return HTTPException(status_code=200)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

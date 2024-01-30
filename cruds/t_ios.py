@@ -8,8 +8,8 @@ def getIos(db: Session):
     return db.query(ios_model.T_ios).all()
 
 # iOS登録
-def createIos(db:Session, ios: ios_schema.createIos):
-    db_ios = ios_model.T_ios(**ios.dict())
+def createIos(db:Session, ios: ios_schema.createIos, current_user):
+    db_ios = ios_model.T_ios(**ios.dict(), create_id=current_user.id, update_id=current_user.id)
     db.add(db_ios)
     db.commit()
     db.refresh(db_ios)
