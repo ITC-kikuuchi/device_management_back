@@ -42,3 +42,9 @@ def updatePc(db: Session, pc: pc_schema.updatePc, original: pc_model.T_pc):
 def deletePc(db: Session, original: pc_model.T_pc) -> None:
     db.delete(original)
     db.commit()
+
+# 最終更新フラグが true の情報を取得
+def getLastUpdatedData(db: Session):
+    return db.query(pc_model.T_pc).filter(pc_model.T_pc.last_updated_flag == True).first()
+
+    db.commit()
