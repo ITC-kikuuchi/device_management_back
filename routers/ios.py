@@ -8,6 +8,15 @@ import cruds.t_ios as ios_crud
 
 router=APIRouter()
 
+# 最終更新フラグを false に変更
+def updateLastUpdateFlag(db: Session):
+    # 最終更新データの取得
+    ios_data = ios_crud.getLastUpdatedData(db)
+    if ios_data:
+        # 最終更新データが存在した場合
+        # 最終更新データの最終更新フラグの更新
+        ios_crud.updateLastUpdateFlag(db, ios_data)
+
 # iOS一覧取得API
 @router.get("/ios", response_model=list[ios_schema.ios])
 def getIos(login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
