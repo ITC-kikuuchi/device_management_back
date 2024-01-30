@@ -29,7 +29,8 @@ def getPc(login_user: dict = Depends(get_current_user), db: Session = Depends(ge
 @router.post("/pc")
 def createPc(pc: pc_schema.createPc, login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
     try:
-        pc_crud.createPc(db, pc)
+        # 最終更新フラグを false に変更
+        updateLastUpdateFlag(db)
         return HTTPException(status_code=200)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
