@@ -8,6 +8,15 @@ import schemas.t_pc as pc_schema
 
 router = APIRouter()
 
+# 最終更新フラグを false に変更
+def updateLastUpdateFlag(db: Session):
+    # 最終更新データの取得
+    pc_data = pc_crud.getLastUpdatedData(db)
+    if pc_data:
+        # 最終更新データが存在した場合
+        # 最終更新データの 最終更新フラグの更新
+        pc_crud.updateLastUpdateFlag(db, pc_data)
+
 # PC一覧取得API
 @router.get("/pc", response_model=list[pc_schema.pc])
 def getPc(login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
