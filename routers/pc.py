@@ -56,6 +56,7 @@ def updatePc(pc_id: int, pc: pc_schema.updatePc, login_user: dict = Depends(get_
     try:
         # 最終更新フラグを false に変更
         updateLastUpdateFlag(db)
+        # PC情報の更新
         pc_crud.updatePc(db, pc, login_user, original=pcById)
         return HTTPException(status_code=200)
     except Exception as e:
