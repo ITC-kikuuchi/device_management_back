@@ -54,9 +54,9 @@ def updatePc(pc_id: int, pc: pc_schema.updatePc, login_user: dict = Depends(get_
         # id に紐づくデータが存在しなかった場合
         raise HTTPException(status_code=404, detail=f"PC_ID: {pc_id} not found")
     try:
-        pc_crud.updatePc(db, pc, original=pcById)
         # 最終更新フラグを false に変更
         updateLastUpdateFlag(db)
+        pc_crud.updatePc(db, pc, login_user, original=pcById)
         return HTTPException(status_code=200)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
