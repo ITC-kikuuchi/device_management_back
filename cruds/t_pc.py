@@ -47,4 +47,7 @@ def deletePc(db: Session, original: pc_model.T_pc) -> None:
 def getLastUpdatedData(db: Session):
     return db.query(pc_model.T_pc).filter(pc_model.T_pc.last_updated_flag == True).first()
 
+# 最終更新フラグを false に更新
+def updateLastUpdateFlag(db: Session, pc_data):
+    pc_data.last_updated_flag = False
     db.commit()
