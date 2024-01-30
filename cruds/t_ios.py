@@ -28,3 +28,8 @@ def updateIos(db: Session, ios: ios_schema.updateIos, original: ios_model.T_ios)
 def deleteIos(db: Session, original: ios_model.T_ios):
     db.delete(original)
     db.commit()
+
+# 最終更新フラグが true の情報を取得
+def getLastUpdatedData(db: Session):
+    return db.query(ios_model.T_ios).filter(ios_model.T_ios.last_updated_flag == True).first()
+    db.commit()
