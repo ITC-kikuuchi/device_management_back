@@ -55,6 +55,8 @@ def updateIos(ios_id: int, ios: ios_schema.updateIos, login_user: dict = Depends
         raise HTTPException(status_code=404, detail=f"IOS_ID: {ios_id} not found")
     try:
         ios_crud.updateIos(db, ios, original=iosById)
+        # 最終更新フラグを false に変更
+        updateLastUpdateFlag(db)
         return HTTPException(status_code=200)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
