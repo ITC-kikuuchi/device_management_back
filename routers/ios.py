@@ -15,7 +15,7 @@ def getIos(login_user: dict = Depends(get_current_user), db: Session = Depends(g
         return ios_crud.getIos(db)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-    
+
 # iOS登録API
 @router.post("/ios")
 def createIos(ios: ios_schema.createIos, login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
@@ -24,7 +24,7 @@ def createIos(ios: ios_schema.createIos, login_user: dict = Depends(get_current_
         return HTTPException(status_code=200)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-    
+
 # iOS詳細取得API
 @router.get("/ios/{ios_id}", response_model=ios_schema.detailIos)
 def createIos(ios_id: int, login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
@@ -46,7 +46,7 @@ def updateIos(ios_id: int, ios: ios_schema.updateIos, login_user: dict = Depends
         return HTTPException(status_code=200)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-    
+
 # iOS削除API
 @router.delete("/ios/{ios_id}")
 def deleteIos(ios_id: int, login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
