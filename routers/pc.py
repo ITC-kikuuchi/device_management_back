@@ -31,6 +31,8 @@ def createPc(pc: pc_schema.createPc, login_user: dict = Depends(get_current_user
     try:
         # 最終更新フラグを false に変更
         updateLastUpdateFlag(db)
+        # PC情報の登録
+        pc_crud.createPc(db, pc, login_user)
         return HTTPException(status_code=200)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

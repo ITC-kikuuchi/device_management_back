@@ -8,8 +8,8 @@ def getPc(db: Session):
     return db.query(pc_model.T_pc).all()
 
 # PC登録
-def createPc(db: Session, pc: pc_schema.createPc):
-    db_pc = pc_model.T_pc(**pc.dict())
+def createPc(db: Session, pc: pc_schema.createPc, current_user):
+    db_pc = pc_model.T_pc(**pc.dict(), create_id=current_user.id, update_id=current_user.id)
     db.add(db_pc)
     db.commit()
     db.refresh(db_pc)
