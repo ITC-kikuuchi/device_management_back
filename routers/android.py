@@ -9,9 +9,12 @@ import cruds.t_android as android_crud
 router=APIRouter()
 
 # Android一覧取得API
-@router.get("/android")
-def getAndroid():
-    pass
+@router.get("/android", response_model=list[android_schema.android])
+def getAndroid(login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
+    try:
+        return android_crud.getAndroid(db)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 # Android登録API
 @router.post("/android")
