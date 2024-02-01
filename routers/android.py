@@ -8,6 +8,15 @@ import cruds.t_android as android_crud
 
 router=APIRouter()
 
+# 最終更新フラグを false に変更
+def updateLastUpdateFlag(db: Session):
+    # 最終更新データの取得
+    android_data = android_crud.getLastUpdatedData(db)
+    if android_data:
+        # 最終更新データが存在した場合
+        # 最終更新データの最終更新フラグの更新
+        android_crud.updateLastUpdateFlag(db, android_data)
+
 # Android一覧取得API
 @router.get("/android", response_model=list[android_schema.android])
 def getAndroid(login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
