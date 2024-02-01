@@ -14,6 +14,10 @@ def createAndroid(db: Session, android: android_schema.createAndroid, current_us
     db.commit()
     db.refresh(db_android)
 
+# Android詳細取得
+def getDetailAndroid(db: Session, android_id: int):
+    return db.query(android_model.T_android).filter(android_model.T_android.id == android_id).first()
+
 # 最終更新フラグが true の情報を取得
 def getLastUpdatedData(db: Session):
     return db.query(android_model.T_android).filter(android_model.T_android.last_updated_flag == True).first()
