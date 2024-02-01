@@ -27,8 +27,15 @@ def getAndroid(login_user: dict = Depends(get_current_user), db: Session = Depen
 
 # Android登録API
 @router.post("/android")
-def createAndroid():
-    pass
+def createAndroid(android: android_schema.createAndroid, login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
+    try:
+        # 最終更新フラグを false に変更
+        updateLastUpdateFlag(db)
+        # Android情報の登録
+        android_crud.createAndroid(db, android, login_user)
+        return HTTPException(status_code=200)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 # Android詳細取得API
 @router.get("/android/{android_id}")
