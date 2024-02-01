@@ -18,7 +18,7 @@ class T_android(Base):
     delivery_date = Column(Date)
     disposal_date = Column(Date)
     remarks = Column(Text)
-    Location = Column(String(255))
+    location = Column(String(255))
     delete_flag = Column(Boolean, default=0, nullable=False)
     last_updated_flag = Column(Boolean, default=0, nullable=False)
     create_id = Column(Integer)
