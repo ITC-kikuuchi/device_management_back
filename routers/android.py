@@ -38,9 +38,13 @@ def createAndroid(android: android_schema.createAndroid, login_user: dict = Depe
         raise HTTPException(status_code=500, detail=str(e))
 
 # Android詳細取得API
-@router.get("/android/{android_id}")
-def createAndroid():
-    pass
+@router.get("/android/{android_id}", response_model=android_schema.detailAndroid)
+def createAndroid(android_id: int, login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
+    android = android_crud.getDetailAndroid(db, android_id=android_id)
+    if not android:
+        # id に紐づくデータが存在しなかった場合
+        raise HTTPException(status_code=404, detail=f"Android_ID: {android_id} not found")
+    return android
 
 # Android更新API
 @router.put("/android/{android_id}")
