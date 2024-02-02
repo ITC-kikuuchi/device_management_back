@@ -64,5 +64,13 @@ def updateAndroid(android_id: int, android: android_schema.updateAndroid, login_
 
 # Android削除API
 @router.delete("/android/{android_id}")
-def deleteAndroid():
-    pass
+def deleteAndroid(android_id: int, login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
+    androidById = android_crud.getDetailAndroid(db, android_id=android_id)
+    if not androidById:
+        # id に紐づくデータが存在しなかった場合
+        raise HTTPException(status_code=404, detail=f"Android_ID: {android_id} not found")
+    try:
+        android_crud.deleteAndroid(db, original=androidById)
+        return HTTPException(status_code=200)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
