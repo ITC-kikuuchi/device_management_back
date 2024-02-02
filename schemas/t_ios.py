@@ -70,6 +70,7 @@ class updateIos(BaseModel):
     delivery_date: Optional[date] = None
     disposal_date: Optional[date] = None
     remarks: Optional[str] = None
+    delete_flag: bool
     last_updated_flag: bool = Field(default=True)
     updated_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(jst))
 
