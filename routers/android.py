@@ -48,8 +48,19 @@ def createAndroid(android_id: int, login_user: dict = Depends(get_current_user),
 
 # Android更新API
 @router.put("/android/{android_id}")
-def updateAndroid():
-    pass
+def updateAndroid(android_id: int, android: android_schema.updateAndroid, login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
+    androidById = android_crud.getDetailAndroid(db, android_id=android_id)
+    if not androidById:
+        # id に紐づくデータが存在しなかった場合
+        raise HTTPException(status_code=404, detail=f"Android_ID: {android_id} not found")
+    try:
+        # 最終更新フラグを false に変更
+        updateLastUpdateFlag(db)
+        # Android情報の登録
+        android_crud.updateAndroid(db, android, login_user, original=androidById)
+        return HTTPException(status_code=200)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 # Android削除API
 @router.delete("/android/{android_id}")

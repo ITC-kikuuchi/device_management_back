@@ -57,3 +57,21 @@ class detailAndroid(BaseModel):
 
     class Config:
         orm_mode = True
+
+class updateAndroid(BaseModel):
+    label_name: Optional[str] = None
+    android_name: Optional[str] = None
+    manufacturer: Optional[str] = None
+    type: Optional[str] = None
+    os: Optional[str] = None
+    carrier: Optional[str] = None
+    condition: Optional[str] = None
+    delivery_date: Optional[date] = None
+    disposal_date: Optional[date] = None
+    remarks: Optional[str] = None
+    location: Optional[str] = None
+    last_updated_flag: bool = Field(default=True)
+    updated_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(jst))
+
+    class Config:
+        orm_mode = True
