@@ -55,6 +55,7 @@ class detailAndroid(BaseModel):
     disposal_date: Optional[date] = None
     remarks: Optional[str] = None
     location: Optional[str] = None
+    delete_flag: bool
 
     class Config:
         orm_mode = True
