@@ -26,6 +26,11 @@ def updateAndroid(db: Session, android: android_schema.updateAndroid, current_us
     original.update_id = current_user.id
     db.commit()
 
+# Android削除
+def deleteAndroid(db: Session, original: android_model.T_android):
+    db.delete(original)
+    db.commit()
+
 # 最終更新フラグが true の情報を取得
 def getLastUpdatedData(db: Session):
     return db.query(android_model.T_android).filter(android_model.T_android.last_updated_flag == True).first()
