@@ -19,6 +19,7 @@ class ios(BaseModel):
     type: Optional[str] = None
     os: Optional[str] = None
     delete_flag: bool
+    last_updated_flag: bool
 
     class Config:
         orm_mode = True
