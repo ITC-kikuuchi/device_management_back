@@ -54,6 +54,7 @@ class detailIos(BaseModel):
     delivery_date: Optional[date] = None
     disposal_date: Optional[date] = None
     remarks: Optional[str] = None
+    delete_flag: bool
 
     class Config:
         orm_mode = True
