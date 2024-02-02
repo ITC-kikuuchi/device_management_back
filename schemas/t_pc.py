@@ -19,6 +19,7 @@ class pc(BaseModel):
     manufacturer: Optional[str] = None
     type: Optional[str] = None
     delete_flag: bool
+    last_updated_flag: bool
 
     class Config:
         orm_mode = True
