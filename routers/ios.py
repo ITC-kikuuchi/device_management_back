@@ -39,7 +39,7 @@ def createIos(ios: ios_schema.createIos, login_user: dict = Depends(get_current_
 
 # iOS詳細取得API
 @router.get("/ios/{ios_id}", response_model=ios_schema.detailIos)
-def createIos(ios_id: int, login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
+def getIosDetail(ios_id: int, login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
     ios = ios_crud.getDetailIos(db, ios_id=ios_id)
     if not ios:
         # id に紐づくデータが存在しなかった場合
