@@ -3,12 +3,18 @@ from sqlalchemy.orm import Session
 from database import get_db
 from routers.auth import get_current_user
 
+import schemas.t_windows as windows_schema
+import cruds.t_windows as windows_crud
+
 router=APIRouter()
 
 # Windows(スマホ)一覧取得API
-@router.get("/windows")
-def getWindows():
-    pass
+@router.get("/windows", response_model=list[windows_schema.windows])
+def getWindows(login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
+    try:
+        return windows_crud.getWindows(db)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 # Windows(スマホ)登録API
 @router.post("/windows")
