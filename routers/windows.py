@@ -8,6 +8,15 @@ import cruds.t_windows as windows_crud
 
 router=APIRouter()
 
+# 最終更新フラグを false に変更
+def updateLastUpdateFlag(db: Session):
+    # 最終更新データの取得
+    windows_data = windows_crud.getLastUpdatedData(db)
+    if windows_data:
+        # 最終更新データが存在した場合
+        # 最終更新データの最終更新フラグの更新
+        windows_crud.updateLastUpdateFlag(db, windows_data)
+
 # Windows(スマホ)一覧取得API
 @router.get("/windows", response_model=list[windows_schema.windows])
 def getWindows(login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
