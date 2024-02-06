@@ -38,9 +38,13 @@ def createWindows(windows: windows_schema.createWindows, login_user: dict = Depe
         raise HTTPException(status_code=500, detail=str(e))
 
 # Windows(スマホ)詳細取得API
-@router.get("/windows/{windows_id}")
-def getWindowsDetail():
-    pass
+@router.get("/windows/{windows_id}", response_model=windows_schema.detailWindows)
+def getWindowsDetail(windows_id: int, login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
+    windows = windows_crud.getDetailWindows(db, windows_id)
+    if not windows:
+        # id に紐づくデータが存在しなかった場合
+        raise HTTPException(status_code=404, detail=f"Windows_ID: {windows_id} not found")
+    return windows
 
 # Windows(スマホ)更新API
 @router.put("/windows/{windows_id}")
