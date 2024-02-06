@@ -42,3 +42,20 @@ class createWindows(BaseModel):
 
     class Config:
         orm_mode = True
+
+class detailWindows(BaseModel):
+    label_name: Optional[str] = None
+    windows_name: Optional[str] = None
+    manufacturer: Optional[str] = None
+    type: Optional[str] = None
+    os: Optional[str] = None
+    carrier: Optional[str] = None
+    condition: Optional[str] = None
+    delivery_date: Optional[date] = None
+    disposal_date: Optional[date] = None
+    remarks: Optional[str] = None
+    location: Optional[str] = None
+    delete_flag: bool
+
+    class Config:
+        orm_mode = True
