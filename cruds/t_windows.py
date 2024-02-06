@@ -7,7 +7,7 @@ import schemas.t_windows as windows_schema
 def getWindows(db: Session):
     return db.query(windows_model.T_windows).all()
 
-# Windows(スマホ)登録処理
+# Windows(スマホ)登録
 def createWindows(db: Session, windows: windows_schema.createWindows, current_user):
     db_windows = windows_model.T_windows(**windows.dict(), create_id=current_user.id, update_id=current_user.id)
     db.add(db_windows)
