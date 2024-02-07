@@ -18,6 +18,14 @@ def createWindows(db: Session, windows: windows_schema.createWindows, current_us
 def getDetailWindows(db: Session, windows_id: int):
     return db.query(windows_model.T_windows).filter(windows_model.T_windows.id == windows_id).first()
 
+# Windows(スマホ)更新
+def updateWindows(db: Session, windows: windows_schema.updateWindows, current_user, original: windows_model.T_windows):
+    for field, value in windows.dict().items():
+        setattr(original, field, value)
+
+    original.update_id = current_user.id
+    db.commit()
+
 # 最終更新フラグが true の情報を取得
 def getLastUpdatedData(db: Session):
     return db.query(windows_model.T_windows).filter(windows_model.T_windows.last_updated_flag == True).first()
