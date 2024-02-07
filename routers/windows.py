@@ -48,8 +48,19 @@ def getWindowsDetail(windows_id: int, login_user: dict = Depends(get_current_use
 
 # Windows(スマホ)更新API
 @router.put("/windows/{windows_id}")
-def updateWindows():
-    pass
+def updateWindows(windows_id: int, windows: windows_schema.updateWindows, login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
+    windowsById = windows_crud.getDetailWindows(db, windows_id)
+    if not windowsById:
+        # id に紐づくデータが存在しなかった場合
+        raise HTTPException(status_code=404, detail=f"Windows_ID: {windows_id} not found")
+    try:
+        # 最終更新フラグを false に変更
+        updateLastUpdateFlag(db)
+        # Windows 情報の更新
+        windows_crud.updateWindows(db, windows, login_user, original=windowsById)
+        return HTTPException(status_code=200)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 # Windows(スマホ)削除API
 @router.delete("/windows/{windows_id}")
