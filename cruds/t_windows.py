@@ -26,6 +26,11 @@ def updateWindows(db: Session, windows: windows_schema.updateWindows, current_us
     original.update_id = current_user.id
     db.commit()
 
+# Windows(スマホ)削除
+def deleteWindows(db: Session, original: windows_model.T_windows):
+    db.delete(original)
+    db.commit()
+
 # 最終更新フラグが true の情報を取得
 def getLastUpdatedData(db: Session):
     return db.query(windows_model.T_windows).filter(windows_model.T_windows.last_updated_flag == True).first()

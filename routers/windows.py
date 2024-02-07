@@ -64,5 +64,14 @@ def updateWindows(windows_id: int, windows: windows_schema.updateWindows, login_
 
 # Windows(スマホ)削除API
 @router.delete("/windows/{windows_id}")
-def deleteWindows():
-    pass
+def deleteWindows(windows_id: int, login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
+    windowsById = windows_crud.getDetailWindows(db, windows_id)
+    if not windowsById:
+        # id に紐づくデータが存在しなかった場合
+        raise HTTPException(status_code=404, detail=f"Windows_ID: {windows_id} not found")
+    try:
+        # Windows 情報の削除
+        windows_crud.deleteWindows(db, original=windowsById)
+        return HTTPException(status_code=200)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
