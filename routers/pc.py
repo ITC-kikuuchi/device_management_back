@@ -5,6 +5,8 @@ from routers.auth import get_current_user
 
 import cruds.t_pc as pc_crud
 import schemas.t_pc as pc_schema
+import cruds.auth as auth_crud 
+import schemas.auth as auth_schema
 
 router = APIRouter()
 
@@ -74,3 +76,10 @@ def deletePc(pc_id: int, login_user: dict = Depends(get_current_user), db: Sessi
         return HTTPException(status_code=200)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+# PC最終更新者取得API
+@router.get("/pc_update_user", response_model=auth_schema.loginUser)
+def deletePc(login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
+    pc_data = pc_crud.getLastUpdatedData(db)
+    if pc_data:
+        return auth_crud.getUserById(db, pc_data.id)
