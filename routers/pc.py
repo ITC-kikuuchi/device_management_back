@@ -5,6 +5,8 @@ from routers.auth import get_current_user
 
 import cruds.t_pc as pc_crud
 import schemas.t_pc as pc_schema
+import cruds.auth as auth_crud 
+import schemas.auth as auth_schema
 
 router = APIRouter()
 
