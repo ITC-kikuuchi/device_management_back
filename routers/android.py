@@ -76,3 +76,10 @@ def deleteAndroid(android_id: int, login_user: dict = Depends(get_current_user),
         return HTTPException(status_code=200)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+# Android最終更新者取得API
+@router.get("/android_update_user", response_model=auth_schema.loginUser)
+def deletePc(login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
+    android_data = android_crud.getLastUpdatedData(db)
+    if android_data:
+        return auth_crud.getUserById(db, android_data.id)
