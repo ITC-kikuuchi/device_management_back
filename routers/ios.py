@@ -79,7 +79,7 @@ def deleteIos(ios_id: int, login_user: dict = Depends(get_current_user), db: Ses
     
 # iOS最終更新者取得API
 @router.get("/ios_update_user", response_model=auth_schema.loginUser)
-def deletePc(login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
+def getUpdateUser(login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
     ios_data = ios_crud.getLastUpdatedData(db)
     if ios_data:
         return auth_crud.getUserById(db, ios_data.id)
