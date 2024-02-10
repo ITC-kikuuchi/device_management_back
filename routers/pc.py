@@ -79,7 +79,7 @@ def deletePc(pc_id: int, login_user: dict = Depends(get_current_user), db: Sessi
     
 # PC最終更新者取得API
 @router.get("/pc_update_user", response_model=auth_schema.loginUser)
-def deletePc(login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
+def getUpdateUser(login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
     pc_data = pc_crud.getLastUpdatedData(db)
     if pc_data:
         return auth_crud.getUserById(db, pc_data.id)

@@ -5,6 +5,8 @@ from routers.auth import get_current_user
 
 import schemas.t_windows as windows_schema
 import cruds.t_windows as windows_crud
+import schemas.auth as auth_schema
+import cruds.auth as auth_crud
 
 router=APIRouter()
 
@@ -75,3 +77,10 @@ def deleteWindows(windows_id: int, login_user: dict = Depends(get_current_user),
         return HTTPException(status_code=200)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+# Windows最終更新者取得API
+@router.get("/windows_update_user", response_model=auth_schema.loginUser)
+def getUpdateUser(login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
+    windows_data = windows_crud.getLastUpdatedData(db)
+    if windows_data:
+        return auth_crud.getUserById(db, windows_data.id)
