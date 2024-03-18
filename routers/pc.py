@@ -82,4 +82,4 @@ def deletePc(pc_id: int, login_user: dict = Depends(get_current_user), db: Sessi
 def getUpdateUser(login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
     pc_data = pc_crud.getLastUpdatedData(db)
     if pc_data:
-        return auth_crud.getUserById(db, pc_data.id)
+        return auth_crud.getUserById(db, pc_data.update_id)
