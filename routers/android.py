@@ -82,4 +82,4 @@ def deleteAndroid(android_id: int, login_user: dict = Depends(get_current_user),
 def getUpdateUser(login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
     android_data = android_crud.getLastUpdatedData(db)
     if android_data:
-        return auth_crud.getUserById(db, android_data.id)
+        return auth_crud.getUserById(db, android_data.update_id)

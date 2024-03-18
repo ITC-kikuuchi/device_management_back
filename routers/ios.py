@@ -82,4 +82,4 @@ def deleteIos(ios_id: int, login_user: dict = Depends(get_current_user), db: Ses
 def getUpdateUser(login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
     ios_data = ios_crud.getLastUpdatedData(db)
     if ios_data:
-        return auth_crud.getUserById(db, ios_data.id)
+        return auth_crud.getUserById(db, ios_data.update_id)

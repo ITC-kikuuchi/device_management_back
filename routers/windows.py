@@ -83,4 +83,4 @@ def deleteWindows(windows_id: int, login_user: dict = Depends(get_current_user),
 def getUpdateUser(login_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
     windows_data = windows_crud.getLastUpdatedData(db)
     if windows_data:
-        return auth_crud.getUserById(db, windows_data.id)
+        return auth_crud.getUserById(db, windows_data.update_id)
