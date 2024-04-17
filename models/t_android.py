@@ -4,6 +4,7 @@ from sqlalchemy.dialects.mysql import TIMESTAMP as Timestamp
 
 from database import Base
 
+
 class T_android(Base):
     __tablename__ = "t_android"
 
