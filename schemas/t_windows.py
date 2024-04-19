@@ -11,6 +11,7 @@ windows クラスは BaseModel を継承しているクラス
 # 日本時間のタイムゾーンの設定
 jst = timezone(timedelta(hours=9))
 
+
 class windows(BaseModel):
     id: int
     label_name: Optional[str] = None
@@ -23,6 +24,7 @@ class windows(BaseModel):
 
     class Config:
         orm_mode = True
+
 
 class createWindows(BaseModel):
     label_name: Optional[str] = None
@@ -43,6 +45,7 @@ class createWindows(BaseModel):
     class Config:
         orm_mode = True
 
+
 class detailWindows(BaseModel):
     label_name: Optional[str] = None
     windows_name: Optional[str] = None
@@ -59,6 +62,7 @@ class detailWindows(BaseModel):
 
     class Config:
         orm_mode = True
+
 
 class updateWindows(BaseModel):
     label_name: Optional[str] = None
