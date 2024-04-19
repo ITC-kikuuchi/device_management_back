@@ -11,6 +11,7 @@ android クラスは BaseModel を継承しているクラス
 # 日本時間のタイムゾーンの設定
 jst = timezone(timedelta(hours=9))
 
+
 class android(BaseModel):
     id: int
     label_name: Optional[str] = None
@@ -23,6 +24,7 @@ class android(BaseModel):
 
     class Config:
         orm_mode = True
+
 
 class createAndroid(BaseModel):
     label_name: Optional[str] = None
@@ -43,6 +45,7 @@ class createAndroid(BaseModel):
     class Config:
         orm_mode = True
 
+
 class detailAndroid(BaseModel):
     label_name: Optional[str] = None
     android_name: Optional[str] = None
@@ -59,6 +62,7 @@ class detailAndroid(BaseModel):
 
     class Config:
         orm_mode = True
+
 
 class updateAndroid(BaseModel):
     label_name: Optional[str] = None
