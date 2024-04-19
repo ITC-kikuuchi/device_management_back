@@ -11,6 +11,7 @@ Pc クラスは BaseModel を継承しているクラス
 # 日本時間のタイムゾーンの設定
 jst = timezone(timedelta(hours=9))
 
+
 class pc(BaseModel):
     id: int
     label_name: Optional[str] = None
@@ -23,6 +24,7 @@ class pc(BaseModel):
 
     class Config:
         orm_mode = True
+
 
 class createPc(BaseModel):
     label_name: Optional[str] = None
@@ -48,6 +50,7 @@ class createPc(BaseModel):
     class Config:
         orm_mode = True
 
+
 class detailPc(BaseModel):
     id: int
     label_name: Optional[str] = None
@@ -70,6 +73,7 @@ class detailPc(BaseModel):
 
     class Config:
         orm_mode = True
+
 
 class updatePc(BaseModel):
     label_name: Optional[str] = None
