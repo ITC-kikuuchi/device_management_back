@@ -11,6 +11,7 @@ ios クラスは BaseModel を継承しているクラス
 # 日本時間のタイムゾーンの設定
 jst = timezone(timedelta(hours=9))
 
+
 class ios(BaseModel):
     id: int
     label_name: Optional[str] = None
@@ -23,6 +24,7 @@ class ios(BaseModel):
 
     class Config:
         orm_mode = True
+
 
 class createIos(BaseModel):
     label_name: Optional[str] = None
@@ -42,6 +44,7 @@ class createIos(BaseModel):
     class Config:
         orm_mode = True
 
+
 class detailIos(BaseModel):
     id: int
     label_name: Optional[str] = None
@@ -58,6 +61,7 @@ class detailIos(BaseModel):
 
     class Config:
         orm_mode = True
+
 
 class updateIos(BaseModel):
     label_name: Optional[str] = None
