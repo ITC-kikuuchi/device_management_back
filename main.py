@@ -3,7 +3,9 @@ from fastapi import FastAPI
 import logging
 
 # ロギングの設定
-logging.basicConfig(filename='app.log', level=logging.DEBUG, format='%(asctime)s %(message)s')
+logging.basicConfig(
+    filename="app.log", level=logging.DEBUG, format="%(asctime)s %(message)s"
+)
 
 from routers import auth, pc, ios, android, windows
 
